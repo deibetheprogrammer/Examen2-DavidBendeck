@@ -8,6 +8,7 @@ package examen2.davidbendeck;
 import Usuarios.Cliente;
 import Usuarios.Usuario;
 import Usuarios.UsuarioMantenimiento;
+import java.awt.Dialog;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -32,6 +33,10 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        
+        for (ATM atm : atms) {
+            CB_ATMs_InicioSesion.addItem(atm);
+        }
     }
 
     /**
@@ -43,8 +48,19 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        D_LogIn = new javax.swing.JDialog();
+        jLabel19 = new javax.swing.JLabel();
+        LBL_Bienvenida_LogIn = new javax.swing.JLabel();
+        TF_ID_LogIn = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        PF_Clave_LogIn = new javax.swing.JPasswordField();
+        B_IniciarSesion_LogIn = new javax.swing.JButton();
+        D_MenuCliente = new javax.swing.JDialog();
+        D_MenuMantenimiento = new javax.swing.JDialog();
         TP_Principal = new javax.swing.JTabbedPane();
         P_InicioSesion = new javax.swing.JPanel();
+        CB_ATMs_InicioSesion = new javax.swing.JComboBox<>();
+        B_EscojerATM = new javax.swing.JButton();
         P_Usuario = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         TF_ID_CrearUsuario = new javax.swing.JTextField();
@@ -77,7 +93,7 @@ public class Principal extends javax.swing.JFrame {
         TF_Billetes100_CrearATM = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         TF_Billetes500_CrearATM = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        B_CrearATM_CrearATMs = new javax.swing.JButton();
         P_AsignarATMs = new javax.swing.JPanel();
         CB_ATMs_AsignarATMs = new javax.swing.JComboBox<>();
         B_Asignar_AsignarATMs = new javax.swing.JButton();
@@ -87,17 +103,119 @@ public class Principal extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
 
+        jLabel19.setText("ID");
+
+        LBL_Bienvenida_LogIn.setText("Bienvenida");
+
+        jLabel20.setText("Clave");
+
+        B_IniciarSesion_LogIn.setText("Iniciar Sesión");
+        B_IniciarSesion_LogIn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_IniciarSesion_LogInMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout D_LogInLayout = new javax.swing.GroupLayout(D_LogIn.getContentPane());
+        D_LogIn.getContentPane().setLayout(D_LogInLayout);
+        D_LogInLayout.setHorizontalGroup(
+            D_LogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(D_LogInLayout.createSequentialGroup()
+                .addGroup(D_LogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(D_LogInLayout.createSequentialGroup()
+                        .addGap(255, 255, 255)
+                        .addComponent(LBL_Bienvenida_LogIn))
+                    .addGroup(D_LogInLayout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addGroup(D_LogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel20))
+                        .addGap(93, 93, 93)
+                        .addGroup(D_LogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(TF_ID_LogIn)
+                            .addComponent(PF_Clave_LogIn, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)))
+                    .addGroup(D_LogInLayout.createSequentialGroup()
+                        .addGap(240, 240, 240)
+                        .addComponent(B_IniciarSesion_LogIn)))
+                .addContainerGap(226, Short.MAX_VALUE))
+        );
+        D_LogInLayout.setVerticalGroup(
+            D_LogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(D_LogInLayout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addComponent(LBL_Bienvenida_LogIn)
+                .addGap(85, 85, 85)
+                .addGroup(D_LogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(TF_ID_LogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54)
+                .addGroup(D_LogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(PF_Clave_LogIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54)
+                .addComponent(B_IniciarSesion_LogIn)
+                .addContainerGap(108, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout D_MenuClienteLayout = new javax.swing.GroupLayout(D_MenuCliente.getContentPane());
+        D_MenuCliente.getContentPane().setLayout(D_MenuClienteLayout);
+        D_MenuClienteLayout.setHorizontalGroup(
+            D_MenuClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        D_MenuClienteLayout.setVerticalGroup(
+            D_MenuClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout D_MenuMantenimientoLayout = new javax.swing.GroupLayout(D_MenuMantenimiento.getContentPane());
+        D_MenuMantenimiento.getContentPane().setLayout(D_MenuMantenimientoLayout);
+        D_MenuMantenimientoLayout.setHorizontalGroup(
+            D_MenuMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        D_MenuMantenimientoLayout.setVerticalGroup(
+            D_MenuMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        TP_Principal.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                TP_PrincipalStateChanged(evt);
+            }
+        });
+
+        B_EscojerATM.setText("Escojer ATM");
+        B_EscojerATM.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_EscojerATMMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout P_InicioSesionLayout = new javax.swing.GroupLayout(P_InicioSesion);
         P_InicioSesion.setLayout(P_InicioSesionLayout);
         P_InicioSesionLayout.setHorizontalGroup(
             P_InicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 773, Short.MAX_VALUE)
+            .addGroup(P_InicioSesionLayout.createSequentialGroup()
+                .addContainerGap(307, Short.MAX_VALUE)
+                .addGroup(P_InicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_InicioSesionLayout.createSequentialGroup()
+                        .addComponent(CB_ATMs_InicioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(294, 294, 294))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_InicioSesionLayout.createSequentialGroup()
+                        .addComponent(B_EscojerATM)
+                        .addGap(324, 324, 324))))
         );
         P_InicioSesionLayout.setVerticalGroup(
             P_InicioSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 492, Short.MAX_VALUE)
+            .addGroup(P_InicioSesionLayout.createSequentialGroup()
+                .addGap(144, 144, 144)
+                .addComponent(CB_ATMs_InicioSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(86, 86, 86)
+                .addComponent(B_EscojerATM)
+                .addContainerGap(204, Short.MAX_VALUE))
         );
 
         TP_Principal.addTab("Inicio de Sesión", P_InicioSesion);
@@ -221,7 +339,12 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel13.setText("Billetes de 500");
 
-        jButton1.setText("Crear ATM");
+        B_CrearATM_CrearATMs.setText("Crear ATM");
+        B_CrearATM_CrearATMs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_CrearATM_CrearATMsMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout P_ATMLayout = new javax.swing.GroupLayout(P_ATM);
         P_ATM.setLayout(P_ATMLayout);
@@ -256,7 +379,7 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(TF_Ubicacion_CrearATM)
                             .addComponent(TF_Fabricacion_CrearATM, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(B_CrearATM_CrearATMs)
                         .addGap(106, 106, 106))))
         );
         P_ATMLayout.setVerticalGroup(
@@ -279,7 +402,7 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(53, 53, 53))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_ATMLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(B_CrearATM_CrearATMs)
                         .addGap(25, 25, 25)))
                 .addGroup(P_ATMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -298,6 +421,11 @@ public class Principal extends javax.swing.JFrame {
         TP_Principal.addTab("Crear ATM", P_ATM);
 
         B_Asignar_AsignarATMs.setText("Asignar ");
+        B_Asignar_AsignarATMs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_Asignar_AsignarATMsMouseClicked(evt);
+            }
+        });
 
         jLabel15.setText("ATM");
 
@@ -410,6 +538,127 @@ public class Principal extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Se ha creado un nuevo usuario con exito");
     }//GEN-LAST:event_B_CrearUsuarioMouseClicked
 
+    private void B_CrearATM_CrearATMsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_CrearATM_CrearATMsMouseClicked
+        // TODO add your handling code here:
+        
+        String ID = TF_ID_CrearATM.getText();
+        String ubicacion = TF_Ubicacion_CrearATM.getText();
+        int fabricacion = Integer.parseInt(TF_Fabricacion_CrearATM.getText());
+        int mantenimiento = Integer.parseInt(TF_Mantenimiento_CrearATM.getText());
+        int billetes100 = Integer.parseInt(TF_Billetes100_CrearATM.getText());
+        int billetes500 = Integer.parseInt(TF_Billetes500_CrearATM.getText());
+        
+        if (ID == null) {
+            JOptionPane.showMessageDialog(this, "Escriba un ID valido por favor");
+        }
+        
+        for (ATM atm : atms) {
+            if (atm.getAtmId().equals(ID)) {
+                JOptionPane.showMessageDialog(this, "Este ID ya existe");
+            }
+        }
+        
+        atms.add(new ATM(ID, ubicacion, fabricacion, mantenimiento, billetes100, billetes500));
+        guardarATMs(atms);
+        
+        JOptionPane.showMessageDialog(this, "ATM guardado exitosamente");
+    }//GEN-LAST:event_B_CrearATM_CrearATMsMouseClicked
+
+    private void TP_PrincipalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TP_PrincipalStateChanged
+        // TODO add your handling code here:
+        
+        //ATMS ELEGIR
+        CB_ATMs_InicioSesion.removeAllItems();
+        for (ATM atm : atms) {
+            CB_ATMs_InicioSesion.addItem(atm);
+        }
+        
+        //ATMS ASIGNAR
+        CB_ATMs_AsignarATMs.removeAllItems();
+        for (ATM atm : atms) {
+            CB_ATMs_AsignarATMs.addItem(atm);
+        }
+        
+        //USUARIOS MANTENIMIENTO
+        CB_UsuarioMantenimiento_AsignarATMs.removeAllItems();
+        for (Usuario usuario : usuarios) {
+            if (usuario instanceof UsuarioMantenimiento) {
+                CB_UsuarioMantenimiento_AsignarATMs.addItem((UsuarioMantenimiento) usuario);
+            }
+        }
+    }//GEN-LAST:event_TP_PrincipalStateChanged
+
+    private void B_Asignar_AsignarATMsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_Asignar_AsignarATMsMouseClicked
+        // TODO add your handling code here:
+        
+        UsuarioMantenimiento uMantenimiento = (UsuarioMantenimiento) CB_UsuarioMantenimiento_AsignarATMs.getSelectedItem();
+        ATM selectedtAtm = (ATM) CB_ATMs_AsignarATMs.getSelectedItem();
+        
+        for (ATM atm : uMantenimiento.getAtms()) {
+            if (atm.equals(selectedtAtm)) {
+                JOptionPane.showMessageDialog(this, "Este ATM ya ha sido asignado a este usuario de mantenimiento");
+                return;
+            }
+        }
+        
+        uMantenimiento.getAtms().add(selectedtAtm);
+        guardarUsuarios(usuarios);
+        
+        JOptionPane.showMessageDialog(this, "Se ha asignado el ATM al usuario de mantenimiento");
+    }//GEN-LAST:event_B_Asignar_AsignarATMsMouseClicked
+
+    private void B_IniciarSesion_LogInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_IniciarSesion_LogInMouseClicked
+        // TODO add your handling code here:
+        
+        String ID = TF_ID_LogIn.getText();
+        String clave = PF_Clave_LogIn.getText();
+        Usuario user = null;
+        
+        for (Usuario usuario : usuarios) {
+            if (usuario.getId().equals(ID)) {
+                if (usuario.getClave().equals(clave)) {
+                    user = usuario;
+                }
+            }
+        }
+        if (user == null) {
+            JOptionPane.showMessageDialog(D_LogIn, "ID y/o clave incorrecto(s)");
+        }
+        
+        else if (user instanceof Cliente) {
+            clienteActual = (Cliente) user;
+            
+            D_LogIn.setVisible(false);
+            
+            D_MenuCliente.pack();
+            D_MenuCliente.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+            D_MenuCliente.setVisible(true);
+        } 
+        
+        else {
+            mantenimientoActual = (UsuarioMantenimiento) user;
+            
+            D_LogIn.setVisible(false);
+            
+            D_MenuMantenimiento.pack();
+            D_MenuMantenimiento.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+            D_MenuMantenimiento.setVisible(true);
+        }
+    }//GEN-LAST:event_B_IniciarSesion_LogInMouseClicked
+
+    private void B_EscojerATMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_EscojerATMMouseClicked
+        // TODO add your handling code here:
+        atmActual = (ATM) CB_ATMs_InicioSesion.getSelectedItem();
+        
+        LBL_Bienvenida_LogIn.setText("Bienvedio al cajero " + atmActual.getUbicacion());
+        
+        D_LogIn.pack();
+        D_LogIn.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        D_LogIn.setVisible(true);
+        
+        
+    }//GEN-LAST:event_B_EscojerATMMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -436,7 +685,9 @@ public class Principal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -447,11 +698,20 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton B_Asignar_AsignarATMs;
+    private javax.swing.JButton B_CrearATM_CrearATMs;
     private javax.swing.JButton B_CrearUsuario;
+    private javax.swing.JButton B_EscojerATM;
+    private javax.swing.JButton B_IniciarSesion_LogIn;
     private javax.swing.JComboBox<ATM> CB_ATMs_AsignarATMs;
+    private javax.swing.JComboBox<ATM> CB_ATMs_InicioSesion;
     private javax.swing.JComboBox<String> CB_TipoUsuario_CrearUsuario;
     private javax.swing.JComboBox<UsuarioMantenimiento> CB_UsuarioMantenimiento_AsignarATMs;
+    private javax.swing.JDialog D_LogIn;
+    private javax.swing.JDialog D_MenuCliente;
+    private javax.swing.JDialog D_MenuMantenimiento;
+    private javax.swing.JLabel LBL_Bienvenida_LogIn;
     private javax.swing.JPasswordField PF_Clave_CrearUsuario;
+    private javax.swing.JPasswordField PF_Clave_LogIn;
     private javax.swing.JPanel P_ATM;
     private javax.swing.JPanel P_AsignarATMs;
     private javax.swing.JPanel P_InicioSesion;
@@ -464,13 +724,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField TF_Fabricacion_CrearATM;
     private javax.swing.JTextField TF_ID_CrearATM;
     private javax.swing.JTextField TF_ID_CrearUsuario;
+    private javax.swing.JTextField TF_ID_LogIn;
     private javax.swing.JTextField TF_Mantenimiento_CrearATM;
     private javax.swing.JTextField TF_Nacimiento_CrearUsuario;
     private javax.swing.JTextField TF_Nombre1_CrearUsuario;
     private javax.swing.JTextField TF_Nombre2_CrearUsuario;
     private javax.swing.JTextField TF_Ubicacion_CrearATM;
     private javax.swing.JTabbedPane TP_Principal;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -481,7 +741,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -499,6 +761,7 @@ public class Principal extends javax.swing.JFrame {
     
     //ATM
     private static ArrayList<ATM> atms = new ArrayList<>();
+    private static ATM atmActual;
     
     //TRANSACCIONES
     private static int idTxn;
