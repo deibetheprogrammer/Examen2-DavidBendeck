@@ -1,0 +1,1 @@
+2020-03-21 00:44:51: Retiro de L.500, cuenta: 2, cliente: c2, Transaccion: 12

@@ -1,0 +1,1 @@
+2020-03-21 00:31:28: Retiro de L.400, cuenta: 1, cliente: c1, Transaccion: 10

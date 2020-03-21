@@ -1,0 +1,1 @@
+2020-03-21 00:31:52: Revision cuenta: 1, saldo: 1100, usuario: c1, transaccion: 11

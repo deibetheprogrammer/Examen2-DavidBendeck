@@ -546,22 +546,19 @@ public class Principal extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(241, Short.MAX_VALUE)
                 .addComponent(B_Depositar_DepositarPropia)
                 .addGap(241, 241, 241))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel27)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-                        .addComponent(CB_Cuentas_DepositoPropia, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(195, 195, 195))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel26)
-                        .addGap(81, 81, 81)
-                        .addComponent(TF_Monto_DepositarPropia, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jLabel26)
+                    .addComponent(jLabel27))
+                .addGap(77, 77, 77)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(TF_Monto_DepositarPropia)
+                    .addComponent(CB_Cuentas_DepositoPropia, 0, 195, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1235,6 +1232,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void B_IniciarSesion_LogInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_IniciarSesion_LogInMouseClicked
         // TODO add your handling code here:
+        transRecibo = null;
         
         String ID = TF_ID_LogIn.getText();
         String clave = PF_Clave_LogIn.getText();
@@ -1284,7 +1282,6 @@ public class Principal extends javax.swing.JFrame {
                             + transRecibo.getDescripcion() + "\n\n"
                             + "Gracias por su visita";
                     JOptionPane.showMessageDialog(D_LogIn,factura);
-                    transRecibo = null;
                 }
             }
         } 
@@ -1333,6 +1330,11 @@ public class Principal extends javax.swing.JFrame {
         
         int billetes100 = Integer.parseInt(TF_Billetes100_Mantenimiento.getText());
         int billetes500 = Integer.parseInt(TF_Billetes500_Mantenimiento.getText());
+        
+        if(billetes100 < 0 || billetes500 < 0) {
+            JOptionPane.showMessageDialog(D_MenuMantenimiento, "No puede ingresar cantidades negativas");
+            return;
+        }
         
         int totalIngresado = billetes100 * 100 + billetes500 * 500;
  
@@ -1411,10 +1413,16 @@ public class Principal extends javax.swing.JFrame {
 
     private void B_Depositar_DepositarPropiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_Depositar_DepositarPropiaMouseClicked
         // TODO add your handling code here:
+        
+        int monto = Integer.parseInt(TF_Monto_DepositarPropia.getText());
+        if (monto < 0) {
+            JOptionPane.showConfirmDialog(D_DepositoPropias, "No puede depositar montos negativos");
+            return;
+        }
+        
         idTxn++;
         guardarIdTxn(idTxn);
         
-        int monto = Integer.parseInt(TF_Monto_DepositarPropia.getText());
         Cuenta cuenta = (Cuenta) CB_Cuentas_DepositoPropia.getSelectedItem();
         cuenta.setSaldoDisponible(cuenta.getSaldoDisponible() + monto);
         
@@ -1454,7 +1462,7 @@ public class Principal extends javax.swing.JFrame {
         guardarIdTxn(idTxn);
         
         Cuenta cuenta = (Cuenta) CB_Cuentas_EstadoCuenta.getSelectedItem();
-        Transaccion nTrans = new Transaccion(cuenta.getNumCuenta(), "Revision estado cuenta, cliente: " + clienteActual.getId(), LocalDateTime.now(), idTxn);
+        Transaccion nTrans = new Transaccion(cuenta.getNumCuenta(), "Revision estado cuenta, cliente: " + clienteActual.getId() + ", saldo: " + cuenta.getSaldoDisponible(), LocalDateTime.now(), idTxn);
         transRecibo = nTrans;
         clienteActual.getTransacciones().add(nTrans);
         
@@ -1548,8 +1556,8 @@ public class Principal extends javax.swing.JFrame {
         Cuenta cuenta = (Cuenta) CB_Cuentas_RetiroPropia.getSelectedItem();
         int monto = Integer.parseInt(TF_Monto_RetiroPropia.getText());
         
-        if (!(monto % 100 == 0)) {
-            JOptionPane.showMessageDialog(D_RetiroPropias, "El monto debe de ser multiplo de 100");
+        if (!(monto % 100 == 0) || monto < 0) {
+            JOptionPane.showMessageDialog(D_RetiroPropias, "El monto debe de ser multiplo de 100 y positivo");
             return;
         }
         
@@ -1627,11 +1635,17 @@ public class Principal extends javax.swing.JFrame {
 
     private void B_Depositar_DepositoTercerosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_Depositar_DepositoTercerosMouseClicked
         // TODO add your handling code here:
+       
+        Cuenta cuenta = (Cuenta) CB_Cuentas_DepositoTerceros.getSelectedItem();
+        int monto = Integer.parseInt(TF_Monto_DepositoTerceros.getText());
+        
+        if (monto < 0) {
+            JOptionPane.showConfirmDialog(D_DepositoPropias, "No puede depositar montos negativos");
+            return;
+        }
         idTxn++;
         guardarIdTxn(idTxn);
         
-        Cuenta cuenta = (Cuenta) CB_Cuentas_DepositoTerceros.getSelectedItem();
-        int monto = Integer.parseInt(TF_Monto_DepositoTerceros.getText());
         cuenta.setSaldoDisponible(cuenta.getSaldoDisponible() + monto);
   
         Transaccion nTrans = new Transaccion(cuenta.getNumCuenta(), "Deposito a terceros de L." + monto + ", cliente: " + clienteActual.getId() , LocalDateTime.now(), idTxn);

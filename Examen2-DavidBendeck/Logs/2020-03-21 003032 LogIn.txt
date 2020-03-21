@@ -1,0 +1,1 @@
+2020-03-21 00:30:32: Inicio de sesión, cliente: c1, ATM: ATM-001
