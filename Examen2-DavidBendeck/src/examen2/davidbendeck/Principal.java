@@ -37,12 +37,20 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         
+        //Leer usuarios
+        leerUsuarios(usuarios);
+        
+         //Leer ATMs
+        leerATMs(atms);
+        
         for (ATM atm : atms) {
             CB_ATMs_InicioSesion.addItem(atm);
         }
         
+        transRecibo = null;
         ultNumCuenta = leerNumCuenta();
         idTxn = leerIdTxn();
+        
     }
 
     /**
@@ -99,6 +107,12 @@ public class Principal extends javax.swing.JFrame {
         B_Depositar_DepositarPropia = new javax.swing.JButton();
         jLabel27 = new javax.swing.JLabel();
         D_DepositoTerceros = new javax.swing.JDialog();
+        jLabel31 = new javax.swing.JLabel();
+        TF_Monto_DepositoTerceros = new javax.swing.JTextField();
+        jLabel32 = new javax.swing.JLabel();
+        CB_Cuentas_DepositoTerceros = new javax.swing.JComboBox<>();
+        B_Depositar_DepositoTerceros = new javax.swing.JButton();
+        jLabel33 = new javax.swing.JLabel();
         D_NuevaCuenta = new javax.swing.JDialog();
         D_EstadoCuenta = new javax.swing.JDialog();
         jPanel5 = new javax.swing.JPanel();
@@ -576,15 +590,58 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jLabel31.setText("Cuenta");
+
+        jLabel32.setText("Monto");
+
+        B_Depositar_DepositoTerceros.setText("Efectuar deposito");
+        B_Depositar_DepositoTerceros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_Depositar_DepositoTercerosMouseClicked(evt);
+            }
+        });
+
+        jLabel33.setText("Deposito a terceros");
+
         javax.swing.GroupLayout D_DepositoTercerosLayout = new javax.swing.GroupLayout(D_DepositoTerceros.getContentPane());
         D_DepositoTerceros.getContentPane().setLayout(D_DepositoTercerosLayout);
         D_DepositoTercerosLayout.setHorizontalGroup(
             D_DepositoTercerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(D_DepositoTercerosLayout.createSequentialGroup()
+                .addGroup(D_DepositoTercerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(D_DepositoTercerosLayout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addGroup(D_DepositoTercerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel32)
+                            .addComponent(jLabel31))
+                        .addGap(82, 82, 82)
+                        .addGroup(D_DepositoTercerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(TF_Monto_DepositoTerceros)
+                            .addComponent(CB_Cuentas_DepositoTerceros, 0, 192, Short.MAX_VALUE)))
+                    .addGroup(D_DepositoTercerosLayout.createSequentialGroup()
+                        .addGap(201, 201, 201)
+                        .addComponent(B_Depositar_DepositoTerceros))
+                    .addGroup(D_DepositoTercerosLayout.createSequentialGroup()
+                        .addGap(195, 195, 195)
+                        .addComponent(jLabel33)))
+                .addContainerGap(238, Short.MAX_VALUE))
         );
         D_DepositoTercerosLayout.setVerticalGroup(
             D_DepositoTercerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(D_DepositoTercerosLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel33)
+                .addGap(63, 63, 63)
+                .addGroup(D_DepositoTercerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel31)
+                    .addComponent(CB_Cuentas_DepositoTerceros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(77, 77, 77)
+                .addGroup(D_DepositoTercerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TF_Monto_DepositoTerceros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel32))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addComponent(B_Depositar_DepositoTerceros)
+                .addGap(67, 67, 67))
         );
 
         javax.swing.GroupLayout D_NuevaCuentaLayout = new javax.swing.GroupLayout(D_NuevaCuenta.getContentPane());
@@ -1077,7 +1134,7 @@ public class Principal extends javax.swing.JFrame {
         if (tipoUsuario.equals("Usuario Cliente")) {
             usuarios.add(new Cliente(new ArrayList<Cuenta>(), new ArrayList<Transaccion>(), ID, nombre1, nombre2, apellido1, apellido2, clave, nacimiento, afiliacion));
         } else {
-            usuarios.add(new UsuarioMantenimiento(new ArrayList<ATM>(), ID, nombre1, nombre2, apellido1, apellido2, clave, nacimiento, afiliacion));
+            usuarios.add(new UsuarioMantenimiento(new ArrayList<String>(), ID, nombre1, nombre2, apellido1, apellido2, clave, nacimiento, afiliacion));
         }
         
         guardarUsuarios(usuarios);
@@ -1140,14 +1197,14 @@ public class Principal extends javax.swing.JFrame {
         UsuarioMantenimiento uMantenimiento = (UsuarioMantenimiento) CB_UsuarioMantenimiento_AsignarATMs.getSelectedItem();
         ATM selectedtAtm = (ATM) CB_ATMs_AsignarATMs.getSelectedItem();
         
-        for (ATM atm : uMantenimiento.getAtms()) {
-            if (atm.equals(selectedtAtm)) {
+        for (String atm : uMantenimiento.getAtms()) {
+            if (atm.equals(selectedtAtm.getAtmId())) {
                 JOptionPane.showMessageDialog(this, "Este ATM ya ha sido asignado a este usuario de mantenimiento");
                 return;
             }
         }
         
-        uMantenimiento.getAtms().add(selectedtAtm);
+        uMantenimiento.getAtms().add(selectedtAtm.getAtmId());
         guardarUsuarios(usuarios);
         
         JOptionPane.showMessageDialog(this, "Se ha asignado el ATM al usuario de mantenimiento");
@@ -1168,27 +1225,54 @@ public class Principal extends javax.swing.JFrame {
             }
         }
         if (user == null) {
+            contador++;
+            if (contador == 5) {
+                JOptionPane.showMessageDialog(D_LogIn, "Ha ingresado un ID y/o contraseña incorrecto(s) cinco veces consecutivas");
+                guardarLog("ALERTA: Intento fallido de ingreso cinco veces consecutivas, ATM: " + atmActual.getAtmId());
+                D_LogIn.setVisible(false);
+            }
             JOptionPane.showMessageDialog(D_LogIn, "ID y/o clave incorrecto(s)");
         }
         
+        
         else if (user instanceof Cliente) {
             clienteActual = (Cliente) user;
+            
+            guardarLog("Inicio de sesión, cliente: " + clienteActual.getId() + ", ATM: " + atmActual.getAtmId());
             
             D_LogIn.setVisible(false);
             
             D_MenuCliente.pack();
             D_MenuCliente.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
             D_MenuCliente.setVisible(true);
+            
+            if (transRecibo != null) {
+                int resp = JOptionPane.showConfirmDialog(D_LogIn, "¿Desea imprimir su recibo?");
+                
+                if (resp == 0) {
+                    String factura = "fecha: " + transRecibo.getFechaHora().toString().replace("T", " ").substring(0, 19) + "\n"
+                            + "Cajero: " + atmActual.getAtmId() + "\n"
+                            + "Ubicacion: " + atmActual.getUbicacion() + "\n"
+                            + "Cliente: " + clienteActual.getNombre1() + " " + clienteActual.getApellido1() + "\n"
+                            + "\n"
+                            + transRecibo.getDescripcion() + "\n\n"
+                            + "Gracias por su visita";
+                    JOptionPane.showMessageDialog(D_LogIn,factura);
+                    transRecibo = null;
+                }
+            }
         } 
         
         else {
             mantenimientoActual = (UsuarioMantenimiento) user;
             
-            if (!mantenimientoActual.getAtms().contains(atmActual)) {
+            if (!mantenimientoActual.getAtms().contains(atmActual.getAtmId())) {
                 JOptionPane.showMessageDialog(D_LogIn, "ALERTA: Este ATM no está asignado al usuario de Mantenimiento ingresado");
                 guardarLog("Usuario: " + mantenimientoActual + " intentó accesar cajero: " + atmActual + " que no tiene asignado");
                 return;
             }
+            
+            guardarLog("Inicio de sesión, Usuario de mantenimiento: " + mantenimientoActual.getId() + ", ATM: " + atmActual.getAtmId());
             
             D_LogIn.setVisible(false);
             
@@ -1203,6 +1287,7 @@ public class Principal extends javax.swing.JFrame {
         atmActual = (ATM) CB_ATMs_InicioSesion.getSelectedItem();
         
         LBL_Bienvenida_LogIn.setText("Bienvedio al cajero " + atmActual.getUbicacion());
+        contador = 0;
         
         D_LogIn.pack();
         D_LogIn.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
@@ -1264,6 +1349,7 @@ public class Principal extends javax.swing.JFrame {
         clienteActual.getCuentas().add(nCuenta);
         
         Transaccion nTrans = new Transaccion(ultNumCuenta, "Creación cuenta", LocalDateTime.now(), idTxn);
+        transRecibo = nTrans;
         clienteActual.getTransacciones().add(nTrans);
         
         guardarUsuarios(usuarios);
@@ -1301,6 +1387,7 @@ public class Principal extends javax.swing.JFrame {
         cuenta.setSaldoDisponible(cuenta.getSaldoDisponible() + monto);
         
         Transaccion nTrans = new Transaccion(cuenta.getNumCuenta(), "Deposito de L. " + monto, LocalDateTime.now(), idTxn);
+        transRecibo = nTrans;
         clienteActual.getTransacciones().add(nTrans);
         
         guardarUsuarios(usuarios);
@@ -1308,7 +1395,7 @@ public class Principal extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(D_DepositoPropias, "Deposito exitoso");
         
         
-        guardarLog("Cliente: " + clienteActual.getId() + " ha depositado L." + monto + " a la cuenta: " + cuenta.getId());
+        guardarLog("Cliente: " + clienteActual.getId() + " ha depositado L." + monto + " a la cuenta: " + cuenta.getNumCuenta());
         
         D_DepositoPropias.setVisible(false);
     }//GEN-LAST:event_B_Depositar_DepositarPropiaMouseClicked
@@ -1336,6 +1423,7 @@ public class Principal extends javax.swing.JFrame {
         
         Cuenta cuenta = (Cuenta) CB_Cuentas_EstadoCuenta.getSelectedItem();
         Transaccion nTrans = new Transaccion(cuenta.getNumCuenta(), "Revision estado cuenta, cliente: " + clienteActual.getId(), LocalDateTime.now(), idTxn);
+        transRecibo = nTrans;
         clienteActual.getTransacciones().add(nTrans);
         
         guardarUsuarios(usuarios);
@@ -1397,6 +1485,7 @@ public class Principal extends javax.swing.JFrame {
         guardarIdTxn(idTxn);
        
         Transaccion nTrans = new Transaccion(0, "Revision de transacciones, cliente: " + clienteActual.getId(), LocalDateTime.now(), idTxn);
+        transRecibo = nTrans;
         clienteActual.getTransacciones().add(nTrans);
         
         guardarUsuarios(usuarios);
@@ -1433,31 +1522,38 @@ public class Principal extends javax.swing.JFrame {
         }
         
         if (cuenta.getSaldoDisponible() < monto) {
-            JOptionPane.showMessageDialog(D_DepositoPropias, "Su saldo es insuficiente");
+            JOptionPane.showMessageDialog(D_RetiroPropias, "Su saldo es insuficiente");
             return;
         }
         
         int dineroATM = atmActual.getBilletes100() * 100 + atmActual.getBilletes500() * 500;
         if (dineroATM < monto) {
-            JOptionPane.showMessageDialog(D_DepositoPropias, "Este cajero no tiene suficiente dinero");
+            JOptionPane.showMessageDialog(D_RetiroPropias, "Este cajero no tiene suficiente dinero");
             guardarLog("Retiro cancelado por dinero insuficiente en cajero, cliente: " + clienteActual.getId() + ", monto: " + monto);
             D_RetiroPropias.setVisible(false);
+            return;
         }
         
         int n500 = Math.min(atmActual.getBilletes500(), monto/500);
         
         int n100 = Math.max(atmActual.getBilletes100(), (monto - n500 * 500)/100);
         
+        System.out.println("n500: " + n500);
+        System.out.println("n100: " + n100);
+        System.out.println("Cajero b500: " + atmActual.getBilletes500());
+        System.out.println("Cajero b100: " + atmActual.getBilletes100());
         if ((n500 * 500 + n100 * 100) != monto) {
             JOptionPane.showMessageDialog(D_RetiroPropias, "Retiro cancelado, No hay suficientes billetes de 100 para el monto solicitado");
             guardarLog("Retiro cancelado por dinero insuficiente en cajero, cliente: " + clienteActual.getId() + ", monto: " + monto);
-            D_DepositoPropias.setVisible(false);
+            D_RetiroPropias.setVisible(false);
+            return;
         }
         
         idTxn++;
         guardarIdTxn(idTxn);
         
         Transaccion nTrans = new Transaccion(cuenta.getNumCuenta(),"Retiro de L." + monto, LocalDateTime.now(),idTxn);
+        transRecibo = nTrans;
         clienteActual.getTransacciones().add(nTrans);
         cuenta.setSaldoDisponible(cuenta.getSaldoDisponible() - monto);
         guardarUsuarios(usuarios);
@@ -1468,6 +1564,8 @@ public class Principal extends javax.swing.JFrame {
         
         guardarLog("Retiro de L." + monto + ", cuenta: " + cuenta.getNumCuenta() + ", cliente: " + clienteActual.getId() + ", Transaccion: " + idTxn);
         
+        JOptionPane.showMessageDialog(D_RetiroPropias, "Retiro exitoso");
+        
         D_RetiroPropias.setVisible(false);
 
     }//GEN-LAST:event_B_Retirar_RetiroPropiaMouseClicked
@@ -1476,11 +1574,52 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         D_MenuCliente.setVisible(false);
         
+        CB_Cuentas_DepositoTerceros.removeAllItems();
+        for (Usuario usuario : usuarios) {
+            if (usuario instanceof Cliente) {
+                if (!usuario.equals(clienteActual)) {
+                    for (Cuenta cuenta : ((Cliente) usuario).getCuentas()) {
+                        CB_Cuentas_DepositoTerceros.addItem(cuenta);
+                        
+                    }
+                }
+            }
+        }
+        
         D_DepositoTerceros.pack();
         D_DepositoTerceros.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         D_DepositoTerceros.setVisible(true);
         
     }//GEN-LAST:event_B_DepositoTercerosMouseClicked
+
+    private void B_Depositar_DepositoTercerosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_Depositar_DepositoTercerosMouseClicked
+        // TODO add your handling code here:
+        idTxn++;
+        guardarIdTxn(idTxn);
+        
+        Cuenta cuenta = (Cuenta) CB_Cuentas_DepositoTerceros.getSelectedItem();
+        int monto = Integer.parseInt(TF_Monto_DepositoTerceros.getText());
+        cuenta.setSaldoDisponible(cuenta.getSaldoDisponible() + monto);
+  
+        Transaccion nTrans = new Transaccion(cuenta.getNumCuenta(), "Deposito a terceros de L." + monto + ", cliente: " + clienteActual.getId() , LocalDateTime.now(), idTxn);
+        transRecibo = nTrans;
+        
+        Cliente clienteDeposito = null;
+        for (Usuario usuario : usuarios) {
+            if (cuenta.getIdCliente().equals(usuario.getId())) {
+                clienteDeposito = (Cliente) usuario;
+            }
+        }
+        
+        clienteDeposito.getTransacciones().add(nTrans);
+        guardarUsuarios(usuarios);
+        
+        guardarLog("Deposito a terceros, cuenta: " + cuenta.getNumCuenta() + ", monto: L." + monto + ", cliente: " + clienteActual.getId());
+        
+        JOptionPane.showMessageDialog(D_DepositoTerceros, "Deposito exitoso");
+        
+        D_DepositoTerceros.setVisible(false);
+    }//GEN-LAST:event_B_Depositar_DepositoTercerosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1525,6 +1664,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton B_CrearATM_CrearATMs;
     private javax.swing.JButton B_CrearUsuario;
     private javax.swing.JButton B_Depositar_DepositarPropia;
+    private javax.swing.JButton B_Depositar_DepositoTerceros;
     private javax.swing.JButton B_DepositoPropias;
     private javax.swing.JButton B_DepositoTerceros;
     private javax.swing.JButton B_EscojerATM;
@@ -1540,6 +1680,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JComboBox<ATM> CB_ATMs_AsignarATMs;
     private javax.swing.JComboBox<ATM> CB_ATMs_InicioSesion;
     private javax.swing.JComboBox<Cuenta> CB_Cuentas_DepositoPropia;
+    private javax.swing.JComboBox<Cuenta> CB_Cuentas_DepositoTerceros;
     private javax.swing.JComboBox<Cuenta> CB_Cuentas_EstadoCuenta;
     private javax.swing.JComboBox<Cuenta> CB_Cuentas_RetiroPropia;
     private javax.swing.JComboBox<String> CB_TipoUsuario_CrearUsuario;
@@ -1578,6 +1719,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField TF_ID_LogIn;
     private javax.swing.JTextField TF_Mantenimiento_CrearATM;
     private javax.swing.JTextField TF_Monto_DepositarPropia;
+    private javax.swing.JTextField TF_Monto_DepositoTerceros;
     private javax.swing.JTextField TF_Monto_RetiroPropia;
     private javax.swing.JTextField TF_Nacimiento_CrearUsuario;
     private javax.swing.JTextField TF_Nombre1_CrearUsuario;
@@ -1608,6 +1750,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1638,6 +1783,10 @@ public class Principal extends javax.swing.JFrame {
     
     //TRANSACCIONES
     private static int idTxn;
+    
+    //MISCELANEO
+    private static int contador;
+    private static Transaccion transRecibo;
     
     //Datos Usuarios
     public static int guardarUsuarios(ArrayList<Usuario> usuarios) {
@@ -1711,9 +1860,11 @@ public class Principal extends javax.swing.JFrame {
     }
     
     public static void guardarLog (String linea) {
-        try(FileWriter fw = new FileWriter("Log.txt",true)) {
-            LocalDateTime fechaHora = LocalDateTime.now();
-            fw.write(fechaHora.toString() + ": " + linea);
+        LocalDateTime fechaHora = LocalDateTime.now();
+        String ldt = fechaHora.toString().replace("T", " ").substring(0,19);
+        try(FileWriter fw = new FileWriter("Log" + ldt + ".txt",true)) {
+            
+            fw.write(ldt + ": " + linea + "\n");
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -15,7 +15,7 @@ public class Cuenta implements Serializable {
     
     private int numCuenta;
     private int saldoDisponible;
-    private String id;
+    private String idCliente;
 
     public Cuenta() {
     }
@@ -23,7 +23,7 @@ public class Cuenta implements Serializable {
     public Cuenta(int numCuenta, int saldoDisponible, String id) {
         this.numCuenta = numCuenta;
         this.saldoDisponible = saldoDisponible;
-        this.id = id;
+        this.idCliente = id;
     }
 
     public int getNumCuenta() {
@@ -42,12 +42,12 @@ public class Cuenta implements Serializable {
         this.saldoDisponible = saldoDisponible;
     }
 
-    public String getId() {
-        return id;
+    public String getIdCliente() {
+        return idCliente;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdCliente(String idCliente) {
+        this.idCliente = idCliente;
     }
 
     @Override

@@ -6,7 +6,6 @@
 package examen2.davidbendeck;
 
 import java.io.Serializable;
-import java.time.Period;
 
 /**
  *
