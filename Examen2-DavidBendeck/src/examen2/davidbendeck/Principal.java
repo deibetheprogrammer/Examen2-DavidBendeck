@@ -1278,6 +1278,7 @@ public class Principal extends javax.swing.JFrame {
                             + "Cajero: " + atmActual.getAtmId() + "\n"
                             + "Ubicacion: " + atmActual.getUbicacion() + "\n"
                             + "Cliente: " + clienteActual.getNombre1() + " " + clienteActual.getApellido1() + "\n"
+                            + "Cuenta: " + transRecibo.getNumCuenta() + "\n"
                             + "\n"
                             + transRecibo.getDescripcion() + "\n\n"
                             + "Gracias por su visita";
@@ -1388,7 +1389,8 @@ public class Principal extends javax.swing.JFrame {
         
         guardarUsuarios(usuarios);
         
-        JOptionPane.showMessageDialog(D_MenuCliente, "Nueva cuenta numero: " + ultNumCuenta + " creada");
+        JOptionPane.showMessageDialog(D_MenuCliente, "Nueva cuenta numero: " + ultNumCuenta + " creada \n"
+                + "Haga su deposito");
         
         guardarLog("TX" + idTxn,"Creacion cuenta: " + ultNumCuenta + " ,usuario: " + clienteActual + ", ID transaccion: " + idTxn);
         

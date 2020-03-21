@@ -1,0 +1,1 @@
+2020-03-21 00:54:25: Revision transacciones, usuario: c1, transaccion: 16
