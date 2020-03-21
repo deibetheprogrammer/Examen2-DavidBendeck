@@ -1189,6 +1189,8 @@ public class Principal extends javax.swing.JFrame {
                 CB_UsuarioMantenimiento_AsignarATMs.addItem((UsuarioMantenimiento) usuario);
             }
         }
+        
+        
     }//GEN-LAST:event_TP_PrincipalStateChanged
 
     private void B_Asignar_AsignarATMsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_Asignar_AsignarATMsMouseClicked
@@ -1230,6 +1232,7 @@ public class Principal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(D_LogIn, "Ha ingresado un ID y/o contraseña incorrecto(s) cinco veces consecutivas");
                 guardarLog("ALERTA: Intento fallido de ingreso cinco veces consecutivas, ATM: " + atmActual.getAtmId());
                 D_LogIn.setVisible(false);
+                return;
             }
             JOptionPane.showMessageDialog(D_LogIn, "ID y/o clave incorrecto(s)");
         }
@@ -1288,6 +1291,9 @@ public class Principal extends javax.swing.JFrame {
         
         LBL_Bienvenida_LogIn.setText("Bienvedio al cajero " + atmActual.getUbicacion());
         contador = 0;
+        
+        System.out.println("Billetes 100: " + atmActual.getBilletes100());
+        System.out.println("Billetes 500: " + atmActual.getBilletes500());
         
         D_LogIn.pack();
         D_LogIn.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
@@ -1797,7 +1803,7 @@ public class Principal extends javax.swing.JFrame {
                 count++;
             }
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            System.out.println(ex);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -1813,7 +1819,7 @@ public class Principal extends javax.swing.JFrame {
                 count++;
             }
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            System.out.println(ex);
         } catch (IOException ex) {
             System.out.println(ex);
         } catch (ClassNotFoundException ex) {
@@ -1833,7 +1839,7 @@ public class Principal extends javax.swing.JFrame {
                 count++;
             }
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            System.out.println(ex);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -1849,7 +1855,7 @@ public class Principal extends javax.swing.JFrame {
                 count++;
             }
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            System.out.println(ex);
         } catch (IOException ex) {
             System.out.println(ex);
         } catch (ClassNotFoundException ex) {
@@ -1862,7 +1868,7 @@ public class Principal extends javax.swing.JFrame {
     public static void guardarLog (String linea) {
         LocalDateTime fechaHora = LocalDateTime.now();
         String ldt = fechaHora.toString().replace("T", " ").substring(0,19);
-        try(FileWriter fw = new FileWriter("Log" + ldt + ".txt",true)) {
+        try(FileWriter fw = new FileWriter("Log" + ldt.replace(":", "-").replace("/", "-") + ".txt",true)) {
             
             fw.write(ldt + ": " + linea + "\n");
         } catch (IOException ex) {
@@ -1886,7 +1892,7 @@ public class Principal extends javax.swing.JFrame {
             linea = br.readLine();
             idTxn = Integer.parseInt(linea);
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            System.out.println(ex);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -1909,7 +1915,7 @@ public class Principal extends javax.swing.JFrame {
             linea = br.readLine();
             numCuenta = Integer.parseInt(linea);
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            System.out.println(ex);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
