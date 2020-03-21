@@ -117,30 +117,33 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="B_DepositoTerceros" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="B_Transacciones" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="B_RetiroPropias" max="32767" attributes="0"/>
+                              <Component id="B_DepositoPropias" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="B_DepositoPropias" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="349" max="32767" attributes="0"/>
-                              <Component id="B_EstadoCuenta" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="B_RetiroPropias" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="B_NuevaCuenta" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="B_DepositoTerceros" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="348" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="B_Transacciones" max="32767" attributes="0"/>
+                          <Component id="B_EstadoCuenta" alignment="1" max="32767" attributes="0"/>
+                          <Component id="B_NuevaCuenta" alignment="1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="382" max="-2" attributes="0"/>
+                      <Component id="LBL_Cliente" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="LBL_Cliente" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="B_NuevaCuenta" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="B_RetiroPropias" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -208,6 +211,11 @@
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="B_DepositoTercerosMouseClicked"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="LBL_Cliente">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Bienvenido"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

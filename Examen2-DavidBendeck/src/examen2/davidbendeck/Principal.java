@@ -77,6 +77,7 @@ public class Principal extends javax.swing.JFrame {
         B_RetiroPropias = new javax.swing.JButton();
         B_DepositoPropias = new javax.swing.JButton();
         B_DepositoTerceros = new javax.swing.JButton();
+        LBL_Cliente = new javax.swing.JLabel();
         D_MenuMantenimiento = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
@@ -266,6 +267,8 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        LBL_Cliente.setText("Bienvenido");
+
         javax.swing.GroupLayout P_MenuClienteLayout = new javax.swing.GroupLayout(P_MenuCliente);
         P_MenuCliente.setLayout(P_MenuClienteLayout);
         P_MenuClienteLayout.setHorizontalGroup(
@@ -273,24 +276,27 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_MenuClienteLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(P_MenuClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(P_MenuClienteLayout.createSequentialGroup()
-                        .addComponent(B_DepositoTerceros)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(B_Transacciones))
-                    .addGroup(P_MenuClienteLayout.createSequentialGroup()
-                        .addComponent(B_DepositoPropias)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 349, Short.MAX_VALUE)
-                        .addComponent(B_EstadoCuenta))
-                    .addGroup(P_MenuClienteLayout.createSequentialGroup()
-                        .addComponent(B_RetiroPropias)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(B_NuevaCuenta)))
+                    .addGroup(P_MenuClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(B_RetiroPropias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(B_DepositoPropias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(B_DepositoTerceros))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 348, Short.MAX_VALUE)
+                .addGroup(P_MenuClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(B_Transacciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(B_EstadoCuenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(B_NuevaCuenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(68, 68, 68))
+            .addGroup(P_MenuClienteLayout.createSequentialGroup()
+                .addGap(382, 382, 382)
+                .addComponent(LBL_Cliente)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         P_MenuClienteLayout.setVerticalGroup(
             P_MenuClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(P_MenuClienteLayout.createSequentialGroup()
-                .addGap(105, 105, 105)
+                .addGap(36, 36, 36)
+                .addComponent(LBL_Cliente)
+                .addGap(53, 53, 53)
                 .addGroup(P_MenuClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(B_NuevaCuenta)
                     .addComponent(B_RetiroPropias))
@@ -1139,6 +1145,15 @@ public class Principal extends javax.swing.JFrame {
         
         guardarUsuarios(usuarios);
         JOptionPane.showMessageDialog(this, "Se ha creado un nuevo usuario con exito");
+        
+        TF_ID_CrearUsuario.setText("");
+        TF_Nombre1_CrearUsuario.setText("");
+        TF_Nombre2_CrearUsuario.setText("");
+        TF_Apellido1_CrearUsuario.setText("");
+        TF_Apellido2_CrearUsuario.setText("");
+        PF_Clave_CrearUsuario.setText("");
+        TF_Nacimiento_CrearUsuario.setText("");
+        TF_Afiliacion_CrearUsuario.setText("");
     }//GEN-LAST:event_B_CrearUsuarioMouseClicked
 
     private void B_CrearATM_CrearATMsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_CrearATM_CrearATMsMouseClicked
@@ -1165,6 +1180,12 @@ public class Principal extends javax.swing.JFrame {
         guardarATMs(atms);
         
         JOptionPane.showMessageDialog(this, "ATM guardado exitosamente");
+        TF_ID_CrearATM.setText("");
+        TF_Ubicacion_CrearATM.setText("");
+        TF_Fabricacion_CrearATM.setText("");
+        TF_Mantenimiento_CrearATM.setText("");
+        TF_Billetes100_CrearATM.setText("");
+        TF_Billetes500_CrearATM.setText("");
     }//GEN-LAST:event_B_CrearATM_CrearATMsMouseClicked
 
     private void TP_PrincipalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TP_PrincipalStateChanged
@@ -1230,7 +1251,7 @@ public class Principal extends javax.swing.JFrame {
             contador++;
             if (contador == 5) {
                 JOptionPane.showMessageDialog(D_LogIn, "Ha ingresado un ID y/o contraseña incorrecto(s) cinco veces consecutivas");
-                guardarLog("ALERTA: Intento fallido de ingreso cinco veces consecutivas, ATM: " + atmActual.getAtmId());
+                guardarLog("ALERTA","Intento fallido de ingreso cinco veces consecutivas, ATM: " + atmActual.getAtmId());
                 D_LogIn.setVisible(false);
                 return;
             }
@@ -1241,9 +1262,11 @@ public class Principal extends javax.swing.JFrame {
         else if (user instanceof Cliente) {
             clienteActual = (Cliente) user;
             
-            guardarLog("Inicio de sesión, cliente: " + clienteActual.getId() + ", ATM: " + atmActual.getAtmId());
+            guardarLog("LogIn","Inicio de sesión, cliente: " + clienteActual.getId() + ", ATM: " + atmActual.getAtmId());
             
             D_LogIn.setVisible(false);
+            
+            LBL_Cliente.setText("Bienvenido " + clienteActual.getNombre1());
             
             D_MenuCliente.pack();
             D_MenuCliente.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
@@ -1271,11 +1294,11 @@ public class Principal extends javax.swing.JFrame {
             
             if (!mantenimientoActual.getAtms().contains(atmActual.getAtmId())) {
                 JOptionPane.showMessageDialog(D_LogIn, "ALERTA: Este ATM no está asignado al usuario de Mantenimiento ingresado");
-                guardarLog("Usuario: " + mantenimientoActual + " intentó accesar cajero: " + atmActual + " que no tiene asignado");
+                guardarLog("ALERTA", "Usuario: " + mantenimientoActual + " intentó accesar cajero: " + atmActual + " que no tiene asignado");
                 return;
             }
             
-            guardarLog("Inicio de sesión, Usuario de mantenimiento: " + mantenimientoActual.getId() + ", ATM: " + atmActual.getAtmId());
+            guardarLog("LogIn","Inicio de sesión, Usuario de mantenimiento: " + mantenimientoActual.getId() + ", ATM: " + atmActual.getAtmId());
             
             D_LogIn.setVisible(false);
             
@@ -1283,6 +1306,9 @@ public class Principal extends javax.swing.JFrame {
             D_MenuMantenimiento.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
             D_MenuMantenimiento.setVisible(true);
         }
+        
+        TF_ID_LogIn.setText("");
+        PF_Clave_LogIn.setText("");
     }//GEN-LAST:event_B_IniciarSesion_LogInMouseClicked
 
     private void B_EscojerATMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_EscojerATMMouseClicked
@@ -1320,7 +1346,7 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(D_MenuMantenimiento, "Total ingresado: " + totalIngresado + "\n"
                     + "Total en el cajero: " + (atmActual.getBilletes100() * 100 + atmActual.getBilletes500() * 500) );
             
-            guardarLog("Usuario de mantenimiento: " + mantenimientoActual.getId() + " ingresó L." + totalIngresado + " al cajero: " + atmActual.getAtmId()) ;
+            guardarLog("MANT","Usuario de mantenimiento: " + mantenimientoActual.getId() + " ingresó L." + totalIngresado + " al cajero: " + atmActual.getAtmId()) ;
             
             D_MenuMantenimiento.setVisible(false);
         }
@@ -1362,7 +1388,7 @@ public class Principal extends javax.swing.JFrame {
         
         JOptionPane.showMessageDialog(D_MenuCliente, "Nueva cuenta numero: " + ultNumCuenta + " creada");
         
-        guardarLog("Creacion cuenta: " + ultNumCuenta + " ,usuario: " + clienteActual + ", ID transaccion: " + idTxn);
+        guardarLog("TX" + idTxn,"Creacion cuenta: " + ultNumCuenta + " ,usuario: " + clienteActual + ", ID transaccion: " + idTxn);
         
         D_MenuCliente.setVisible(false);
     }//GEN-LAST:event_B_NuevaCuentaMouseClicked
@@ -1401,7 +1427,7 @@ public class Principal extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(D_DepositoPropias, "Deposito exitoso");
         
         
-        guardarLog("Cliente: " + clienteActual.getId() + " ha depositado L." + monto + " a la cuenta: " + cuenta.getNumCuenta());
+        guardarLog("TX" + idTxn,"Cliente: " + clienteActual.getId() + " ha depositado L." + monto + " a la cuenta: " + cuenta.getNumCuenta());
         
         D_DepositoPropias.setVisible(false);
     }//GEN-LAST:event_B_Depositar_DepositarPropiaMouseClicked
@@ -1436,7 +1462,7 @@ public class Principal extends javax.swing.JFrame {
         
         JOptionPane.showMessageDialog(D_EstadoCuenta, "Numero de cuenta: " + cuenta.getNumCuenta() + ", Saldo: " + cuenta.getSaldoDisponible());
         
-        guardarLog("Revision cuenta: " + cuenta.getNumCuenta() + ", saldo: " + cuenta.getSaldoDisponible() + ", usuario: " + clienteActual.getId() + ", transaccion: " + idTxn);
+        guardarLog("TX" + idTxn,"Revision cuenta: " + cuenta.getNumCuenta() + ", saldo: " + cuenta.getSaldoDisponible() + ", usuario: " + clienteActual.getId() + ", transaccion: " + idTxn);
         
         D_EstadoCuenta.setVisible(false);
     }//GEN-LAST:event_B_RevisarEstado_EstadoCuentaMouseClicked
@@ -1496,7 +1522,7 @@ public class Principal extends javax.swing.JFrame {
         
         guardarUsuarios(usuarios);
         
-        guardarLog("Revision transacciones, usuario: " + clienteActual.getId() + ", transaccion: " + idTxn);
+        guardarLog("TX" + idTxn,"Revision transacciones, usuario: " + clienteActual.getId() + ", transaccion: " + idTxn);
         
         D_Transacciones.setVisible(false);
     }//GEN-LAST:event_B_Salir_TransaccionesMouseClicked
@@ -1535,22 +1561,23 @@ public class Principal extends javax.swing.JFrame {
         int dineroATM = atmActual.getBilletes100() * 100 + atmActual.getBilletes500() * 500;
         if (dineroATM < monto) {
             JOptionPane.showMessageDialog(D_RetiroPropias, "Este cajero no tiene suficiente dinero");
-            guardarLog("Retiro cancelado por dinero insuficiente en cajero, cliente: " + clienteActual.getId() + ", monto: " + monto);
+            guardarLog("FALLO","Retiro cancelado por dinero insuficiente en cajero, cliente: " + clienteActual.getId() + ", monto: " + monto);
             D_RetiroPropias.setVisible(false);
             return;
         }
         
         int n500 = Math.min(atmActual.getBilletes500(), monto/500);
         
-        int n100 = Math.max(atmActual.getBilletes100(), (monto - n500 * 500)/100);
+        int n100 = Math.min(atmActual.getBilletes100(), (monto - n500 * 500)/100);
         
         System.out.println("n500: " + n500);
         System.out.println("n100: " + n100);
         System.out.println("Cajero b500: " + atmActual.getBilletes500());
         System.out.println("Cajero b100: " + atmActual.getBilletes100());
+        System.out.println("Monto: " + monto);
         if ((n500 * 500 + n100 * 100) != monto) {
             JOptionPane.showMessageDialog(D_RetiroPropias, "Retiro cancelado, No hay suficientes billetes de 100 para el monto solicitado");
-            guardarLog("Retiro cancelado por dinero insuficiente en cajero, cliente: " + clienteActual.getId() + ", monto: " + monto);
+            guardarLog("FALLO","Retiro cancelado por dinero insuficiente en cajero, cliente: " + clienteActual.getId() + ", monto: " + monto);
             D_RetiroPropias.setVisible(false);
             return;
         }
@@ -1568,7 +1595,7 @@ public class Principal extends javax.swing.JFrame {
         atmActual.setBilletes100(atmActual.getBilletes100() - n100);
         guardarATMs(atms);
         
-        guardarLog("Retiro de L." + monto + ", cuenta: " + cuenta.getNumCuenta() + ", cliente: " + clienteActual.getId() + ", Transaccion: " + idTxn);
+        guardarLog("TX" + idTxn,"Retiro de L." + monto + ", cuenta: " + cuenta.getNumCuenta() + ", cliente: " + clienteActual.getId() + ", Transaccion: " + idTxn);
         
         JOptionPane.showMessageDialog(D_RetiroPropias, "Retiro exitoso");
         
@@ -1620,7 +1647,7 @@ public class Principal extends javax.swing.JFrame {
         clienteDeposito.getTransacciones().add(nTrans);
         guardarUsuarios(usuarios);
         
-        guardarLog("Deposito a terceros, cuenta: " + cuenta.getNumCuenta() + ", monto: L." + monto + ", cliente: " + clienteActual.getId());
+        guardarLog("TX" + idTxn,"Deposito a terceros, cuenta: " + cuenta.getNumCuenta() + ", monto: L." + monto + ", cliente: " + clienteActual.getId());
         
         JOptionPane.showMessageDialog(D_DepositoTerceros, "Deposito exitoso");
         
@@ -1702,6 +1729,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDialog D_RetiroPropias;
     private javax.swing.JDialog D_Transacciones;
     private javax.swing.JLabel LBL_Bienvenida_LogIn;
+    private javax.swing.JLabel LBL_Cliente;
     private javax.swing.JLabel LBL_Pass_Confirmacion;
     private javax.swing.JPasswordField PF_Clave_Confirmacion;
     private javax.swing.JPasswordField PF_Clave_CrearUsuario;
@@ -1865,10 +1893,10 @@ public class Principal extends javax.swing.JFrame {
         return count;
     }
     
-    public static void guardarLog (String linea) {
+    public static void guardarLog (String nombre ,String linea) {
         LocalDateTime fechaHora = LocalDateTime.now();
         String ldt = fechaHora.toString().replace("T", " ").substring(0,19);
-        try(FileWriter fw = new FileWriter("Log" + ldt.replace(":", "-").replace("/", "-") + ".txt",true)) {
+        try(FileWriter fw = new FileWriter("Logs/Log " + ldt.replace(":", "-").replace("/", "-") + " " + nombre + ".txt",true)) {
             
             fw.write(ldt + ": " + linea + "\n");
         } catch (IOException ex) {
