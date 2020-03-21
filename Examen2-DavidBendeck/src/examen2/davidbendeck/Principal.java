@@ -1126,6 +1126,10 @@ public class Principal extends javax.swing.JFrame {
         int nacimiento = Integer.parseInt(TF_Nacimiento_CrearUsuario.getText());
         int afiliacion = Integer.parseInt(TF_Afiliacion_CrearUsuario.getText());
         
+        if (ID.equals("")) {
+            JOptionPane.showConfirmDialog(this, "Ingrese un ID correcto");
+        }
+        
         for (Usuario usuario : usuarios) {
             if (usuario.getId().equals(ID)) {
                 JOptionPane.showMessageDialog(this, "Este ID ya existe");
@@ -1163,13 +1167,15 @@ public class Principal extends javax.swing.JFrame {
         int billetes100 = Integer.parseInt(TF_Billetes100_CrearATM.getText());
         int billetes500 = Integer.parseInt(TF_Billetes500_CrearATM.getText());
         
-        if (ID == null) {
+        if (ID.equals("")) {
             JOptionPane.showMessageDialog(this, "Escriba un ID valido por favor");
+            return;
         }
         
         for (ATM atm : atms) {
             if (atm.getAtmId().equals(ID)) {
                 JOptionPane.showMessageDialog(this, "Este ID ya existe");
+                return;
             }
         }
         
