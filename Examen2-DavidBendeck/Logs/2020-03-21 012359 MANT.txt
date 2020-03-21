@@ -1,0 +1,1 @@
+2020-03-21 01:23:59: Usuario de mantenimiento: m1 ingresó L.4400 al cajero: ATM-001
