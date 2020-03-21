@@ -1896,7 +1896,7 @@ public class Principal extends javax.swing.JFrame {
     public static void guardarLog (String nombre ,String linea) {
         LocalDateTime fechaHora = LocalDateTime.now();
         String ldt = fechaHora.toString().replace("T", " ").substring(0,19);
-        try(FileWriter fw = new FileWriter("Logs/Log " + ldt.replace(":", "-").replace("/", "-") + " " + nombre + ".txt",true)) {
+        try(FileWriter fw = new FileWriter("Logs/" + ldt.replace(":", "").replace("/", "") + " " + nombre + ".txt",true)) {
             
             fw.write(ldt + ": " + linea + "\n");
         } catch (IOException ex) {
