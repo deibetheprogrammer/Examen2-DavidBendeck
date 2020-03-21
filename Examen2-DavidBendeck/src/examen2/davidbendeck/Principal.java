@@ -9,9 +9,11 @@ import Usuarios.Cliente;
 import Usuarios.Usuario;
 import Usuarios.UsuarioMantenimiento;
 import java.awt.Dialog;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -37,6 +40,9 @@ public class Principal extends javax.swing.JFrame {
         for (ATM atm : atms) {
             CB_ATMs_InicioSesion.addItem(atm);
         }
+        
+        ultNumCuenta = leerNumCuenta();
+        idTxn = leerIdTxn();
     }
 
     /**
@@ -56,7 +62,54 @@ public class Principal extends javax.swing.JFrame {
         PF_Clave_LogIn = new javax.swing.JPasswordField();
         B_IniciarSesion_LogIn = new javax.swing.JButton();
         D_MenuCliente = new javax.swing.JDialog();
+        P_MenuCliente = new javax.swing.JPanel();
+        B_NuevaCuenta = new javax.swing.JButton();
+        B_EstadoCuenta = new javax.swing.JButton();
+        B_Transacciones = new javax.swing.JButton();
+        B_RetiroPropias = new javax.swing.JButton();
+        B_DepositoPropias = new javax.swing.JButton();
+        B_DepositoTerceros = new javax.swing.JButton();
         D_MenuMantenimiento = new javax.swing.JDialog();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        TF_Billetes500_Mantenimiento = new javax.swing.JTextField();
+        TF_Billetes100_Mantenimiento = new javax.swing.JTextField();
+        B_Finalizar_Mantenimiento = new javax.swing.JButton();
+        jLabel23 = new javax.swing.JLabel();
+        D_Confirmacion = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        B_Confirmar_Confirmacion = new javax.swing.JButton();
+        LBL_Pass_Confirmacion = new javax.swing.JLabel();
+        PF_Clave_Confirmacion = new javax.swing.JPasswordField();
+        D_RetiroPropias = new javax.swing.JDialog();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel30 = new javax.swing.JLabel();
+        CB_Cuentas_RetiroPropia = new javax.swing.JComboBox<>();
+        TF_Monto_RetiroPropia = new javax.swing.JTextField();
+        jLabel29 = new javax.swing.JLabel();
+        B_Retirar_RetiroPropia = new javax.swing.JButton();
+        D_DepositoPropias = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
+        TF_Monto_DepositarPropia = new javax.swing.JTextField();
+        CB_Cuentas_DepositoPropia = new javax.swing.JComboBox<>();
+        B_Depositar_DepositarPropia = new javax.swing.JButton();
+        jLabel27 = new javax.swing.JLabel();
+        D_DepositoTerceros = new javax.swing.JDialog();
+        D_NuevaCuenta = new javax.swing.JDialog();
+        D_EstadoCuenta = new javax.swing.JDialog();
+        jPanel5 = new javax.swing.JPanel();
+        CB_Cuentas_EstadoCuenta = new javax.swing.JComboBox<>();
+        B_RevisarEstado_EstadoCuenta = new javax.swing.JButton();
+        jLabel28 = new javax.swing.JLabel();
+        D_Transacciones = new javax.swing.JDialog();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TBL_Transacciones = new javax.swing.JTable();
+        B_Salir_Transacciones = new javax.swing.JButton();
         TP_Principal = new javax.swing.JTabbedPane();
         P_InicioSesion = new javax.swing.JPanel();
         CB_ATMs_InicioSesion = new javax.swing.JComboBox<>();
@@ -157,26 +210,519 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(108, Short.MAX_VALUE))
         );
 
+        B_NuevaCuenta.setText("Crear Nueva Cuenta");
+        B_NuevaCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_NuevaCuentaMouseClicked(evt);
+            }
+        });
+
+        B_EstadoCuenta.setText("Revisar Estado de Cuenta");
+        B_EstadoCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_EstadoCuentaMouseClicked(evt);
+            }
+        });
+
+        B_Transacciones.setText("Revisar Transacciones");
+        B_Transacciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_TransaccionesMouseClicked(evt);
+            }
+        });
+
+        B_RetiroPropias.setText("Retiro Cuentas Propias");
+        B_RetiroPropias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_RetiroPropiasMouseClicked(evt);
+            }
+        });
+
+        B_DepositoPropias.setText("Deposito Cuentas Propias");
+        B_DepositoPropias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_DepositoPropiasMouseClicked(evt);
+            }
+        });
+
+        B_DepositoTerceros.setText("Deposito Cuenta Terceros");
+        B_DepositoTerceros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_DepositoTercerosMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout P_MenuClienteLayout = new javax.swing.GroupLayout(P_MenuCliente);
+        P_MenuCliente.setLayout(P_MenuClienteLayout);
+        P_MenuClienteLayout.setHorizontalGroup(
+            P_MenuClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_MenuClienteLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(P_MenuClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(P_MenuClienteLayout.createSequentialGroup()
+                        .addComponent(B_DepositoTerceros)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(B_Transacciones))
+                    .addGroup(P_MenuClienteLayout.createSequentialGroup()
+                        .addComponent(B_DepositoPropias)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 349, Short.MAX_VALUE)
+                        .addComponent(B_EstadoCuenta))
+                    .addGroup(P_MenuClienteLayout.createSequentialGroup()
+                        .addComponent(B_RetiroPropias)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(B_NuevaCuenta)))
+                .addGap(68, 68, 68))
+        );
+        P_MenuClienteLayout.setVerticalGroup(
+            P_MenuClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(P_MenuClienteLayout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addGroup(P_MenuClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(B_NuevaCuenta)
+                    .addComponent(B_RetiroPropias))
+                .addGap(76, 76, 76)
+                .addGroup(P_MenuClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(B_EstadoCuenta)
+                    .addComponent(B_DepositoPropias))
+                .addGap(83, 83, 83)
+                .addGroup(P_MenuClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(B_Transacciones)
+                    .addComponent(B_DepositoTerceros))
+                .addContainerGap(97, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout D_MenuClienteLayout = new javax.swing.GroupLayout(D_MenuCliente.getContentPane());
         D_MenuCliente.getContentPane().setLayout(D_MenuClienteLayout);
         D_MenuClienteLayout.setHorizontalGroup(
             D_MenuClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(D_MenuClienteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(P_MenuCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         D_MenuClienteLayout.setVerticalGroup(
             D_MenuClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, D_MenuClienteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(P_MenuCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jLabel21.setText("Numero de billetes de 100 ingresados");
+
+        jLabel22.setText("Numero de billetes de 500 ingresados");
+
+        B_Finalizar_Mantenimiento.setText("Finalizar mantenimiento");
+        B_Finalizar_Mantenimiento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_Finalizar_MantenimientoMouseClicked(evt);
+            }
+        });
+
+        jLabel23.setText("Mantenimiento");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel21)
+                            .addComponent(jLabel22))
+                        .addGap(100, 100, 100)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(TF_Billetes100_Mantenimiento)
+                            .addComponent(TF_Billetes500_Mantenimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(235, 235, 235)
+                        .addComponent(jLabel23))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(192, 192, 192)
+                        .addComponent(B_Finalizar_Mantenimiento)))
+                .addContainerGap(60, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(jLabel23)
+                .addGap(55, 55, 55)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(TF_Billetes100_Mantenimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TF_Billetes500_Mantenimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel22))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addComponent(B_Finalizar_Mantenimiento)
+                .addGap(61, 61, 61))
         );
 
         javax.swing.GroupLayout D_MenuMantenimientoLayout = new javax.swing.GroupLayout(D_MenuMantenimiento.getContentPane());
         D_MenuMantenimiento.getContentPane().setLayout(D_MenuMantenimientoLayout);
         D_MenuMantenimientoLayout.setHorizontalGroup(
             D_MenuMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(D_MenuMantenimientoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         D_MenuMantenimientoLayout.setVerticalGroup(
             D_MenuMantenimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(D_MenuMantenimientoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel24.setText("Ingrese su clave para confirmar su accion");
+
+        jLabel25.setText("Clave");
+
+        B_Confirmar_Confirmacion.setText("Confirmar accion");
+        B_Confirmar_Confirmacion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_Confirmar_ConfirmacionMouseClicked(evt);
+            }
+        });
+
+        LBL_Pass_Confirmacion.setText("pass");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(jLabel24))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(jLabel25)
+                        .addGap(66, 66, 66)
+                        .addComponent(PF_Clave_Confirmacion, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(135, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(B_Confirmar_Confirmacion)
+                .addGap(88, 88, 88)
+                .addComponent(LBL_Pass_Confirmacion)
+                .addGap(77, 77, 77))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(jLabel24)
+                .addGap(100, 100, 100)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(PF_Clave_Confirmacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(B_Confirmar_Confirmacion)
+                    .addComponent(LBL_Pass_Confirmacion))
+                .addGap(50, 50, 50))
+        );
+
+        javax.swing.GroupLayout D_ConfirmacionLayout = new javax.swing.GroupLayout(D_Confirmacion.getContentPane());
+        D_Confirmacion.getContentPane().setLayout(D_ConfirmacionLayout);
+        D_ConfirmacionLayout.setHorizontalGroup(
+            D_ConfirmacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, D_ConfirmacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        D_ConfirmacionLayout.setVerticalGroup(
+            D_ConfirmacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, D_ConfirmacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jLabel30.setText("Cuenta");
+
+        jLabel29.setText("Monto a retirar");
+
+        B_Retirar_RetiroPropia.setText("Retirar dinero");
+        B_Retirar_RetiroPropia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_Retirar_RetiroPropiaMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(TF_Monto_RetiroPropia, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(121, 121, 121))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel29)
+                            .addComponent(jLabel30))
+                        .addGap(129, 129, 129)
+                        .addComponent(CB_Cuentas_RetiroPropia, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(214, 214, 214)
+                        .addComponent(B_Retirar_RetiroPropia)))
+                .addContainerGap(121, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(135, 135, 135)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel30)
+                    .addComponent(CB_Cuentas_RetiroPropia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(65, 65, 65)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TF_Monto_RetiroPropia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel29))
+                .addGap(77, 77, 77)
+                .addComponent(B_Retirar_RetiroPropia)
+                .addContainerGap(109, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout D_RetiroPropiasLayout = new javax.swing.GroupLayout(D_RetiroPropias.getContentPane());
+        D_RetiroPropias.getContentPane().setLayout(D_RetiroPropiasLayout);
+        D_RetiroPropiasLayout.setHorizontalGroup(
+            D_RetiroPropiasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, D_RetiroPropiasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        D_RetiroPropiasLayout.setVerticalGroup(
+            D_RetiroPropiasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jLabel26.setText("Monto");
+
+        B_Depositar_DepositarPropia.setText("Depositar");
+        B_Depositar_DepositarPropia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_Depositar_DepositarPropiaMouseClicked(evt);
+            }
+        });
+
+        jLabel27.setText("Cuenta");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(B_Depositar_DepositarPropia)
+                .addGap(241, 241, 241))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel27)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                        .addComponent(CB_Cuentas_DepositoPropia, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(195, 195, 195))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel26)
+                        .addGap(81, 81, 81)
+                        .addComponent(TF_Monto_DepositarPropia, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(81, 81, 81)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CB_Cuentas_DepositoPropia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel27))
+                .addGap(103, 103, 103)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26)
+                    .addComponent(TF_Monto_DepositarPropia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addComponent(B_Depositar_DepositarPropia)
+                .addGap(75, 75, 75))
+        );
+
+        javax.swing.GroupLayout D_DepositoPropiasLayout = new javax.swing.GroupLayout(D_DepositoPropias.getContentPane());
+        D_DepositoPropias.getContentPane().setLayout(D_DepositoPropiasLayout);
+        D_DepositoPropiasLayout.setHorizontalGroup(
+            D_DepositoPropiasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, D_DepositoPropiasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        D_DepositoPropiasLayout.setVerticalGroup(
+            D_DepositoPropiasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, D_DepositoPropiasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout D_DepositoTercerosLayout = new javax.swing.GroupLayout(D_DepositoTerceros.getContentPane());
+        D_DepositoTerceros.getContentPane().setLayout(D_DepositoTercerosLayout);
+        D_DepositoTercerosLayout.setHorizontalGroup(
+            D_DepositoTercerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        D_DepositoTercerosLayout.setVerticalGroup(
+            D_DepositoTercerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout D_NuevaCuentaLayout = new javax.swing.GroupLayout(D_NuevaCuenta.getContentPane());
+        D_NuevaCuenta.getContentPane().setLayout(D_NuevaCuentaLayout);
+        D_NuevaCuentaLayout.setHorizontalGroup(
+            D_NuevaCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        D_NuevaCuentaLayout.setVerticalGroup(
+            D_NuevaCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        B_RevisarEstado_EstadoCuenta.setText("Revisar estado");
+        B_RevisarEstado_EstadoCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_RevisarEstado_EstadoCuentaMouseClicked(evt);
+            }
+        });
+
+        jLabel28.setText("Cuenta");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(181, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(jLabel28))
+                    .addComponent(CB_Cuentas_EstadoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(B_RevisarEstado_EstadoCuenta)))
+                .addGap(180, 180, 180))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addComponent(jLabel28)
+                .addGap(31, 31, 31)
+                .addComponent(CB_Cuentas_EstadoCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(96, 96, 96)
+                .addComponent(B_RevisarEstado_EstadoCuenta)
+                .addContainerGap(110, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout D_EstadoCuentaLayout = new javax.swing.GroupLayout(D_EstadoCuenta.getContentPane());
+        D_EstadoCuenta.getContentPane().setLayout(D_EstadoCuentaLayout);
+        D_EstadoCuentaLayout.setHorizontalGroup(
+            D_EstadoCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(D_EstadoCuentaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        D_EstadoCuentaLayout.setVerticalGroup(
+            D_EstadoCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, D_EstadoCuentaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        TBL_Transacciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Numero de Cuenta", "Descripcion", "Fecha y hora", "ID transaccion"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(TBL_Transacciones);
+
+        B_Salir_Transacciones.setText("Salir");
+        B_Salir_Transacciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B_Salir_TransaccionesMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 726, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(366, 366, 366)
+                        .addComponent(B_Salir_Transacciones)))
+                .addContainerGap(66, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(94, 94, 94)
+                .addComponent(B_Salir_Transacciones)
+                .addContainerGap(94, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout D_TransaccionesLayout = new javax.swing.GroupLayout(D_Transacciones.getContentPane());
+        D_Transacciones.getContentPane().setLayout(D_TransaccionesLayout);
+        D_TransaccionesLayout.setHorizontalGroup(
+            D_TransaccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, D_TransaccionesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        D_TransaccionesLayout.setVerticalGroup(
+            D_TransaccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(D_TransaccionesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -638,6 +1184,12 @@ public class Principal extends javax.swing.JFrame {
         else {
             mantenimientoActual = (UsuarioMantenimiento) user;
             
+            if (!mantenimientoActual.getAtms().contains(atmActual)) {
+                JOptionPane.showMessageDialog(D_LogIn, "ALERTA: Este ATM no está asignado al usuario de Mantenimiento ingresado");
+                guardarLog("Usuario: " + mantenimientoActual + " intentó accesar cajero: " + atmActual + " que no tiene asignado");
+                return;
+            }
+            
             D_LogIn.setVisible(false);
             
             D_MenuMantenimiento.pack();
@@ -658,6 +1210,277 @@ public class Principal extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_B_EscojerATMMouseClicked
+
+    private void B_Finalizar_MantenimientoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_Finalizar_MantenimientoMouseClicked
+        // TODO add your handling code here:
+        
+        int billetes100 = Integer.parseInt(TF_Billetes100_Mantenimiento.getText());
+        int billetes500 = Integer.parseInt(TF_Billetes500_Mantenimiento.getText());
+        
+        int totalIngresado = billetes100 * 100 + billetes500 * 500;
+ 
+        D_Confirmacion.pack();
+        D_Confirmacion.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        D_Confirmacion.setVisible(true);
+        
+        if (LBL_Pass_Confirmacion.getText().equals("true")) {
+            atmActual.setBilletes100(atmActual.getBilletes100() + billetes100);
+            atmActual.setBilletes500(atmActual.getBilletes500() + billetes500);
+            JOptionPane.showMessageDialog(D_MenuMantenimiento, "Total ingresado: " + totalIngresado + "\n"
+                    + "Total en el cajero: " + (atmActual.getBilletes100() * 100 + atmActual.getBilletes500() * 500) );
+            
+            guardarLog("Usuario de mantenimiento: " + mantenimientoActual.getId() + " ingresó L." + totalIngresado + " al cajero: " + atmActual.getAtmId()) ;
+            
+            D_MenuMantenimiento.setVisible(false);
+        }
+    }//GEN-LAST:event_B_Finalizar_MantenimientoMouseClicked
+
+    private void B_Confirmar_ConfirmacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_Confirmar_ConfirmacionMouseClicked
+        // TODO add your handling code here:
+        
+        String clave = PF_Clave_Confirmacion.getText();
+        
+        if (mantenimientoActual.getClave().equals(clave)) {
+            LBL_Pass_Confirmacion.setText("true");
+        } else {
+            LBL_Pass_Confirmacion.setText("false");
+            JOptionPane.showMessageDialog(D_Confirmacion, "Clave incorrecta");
+            return;
+        }
+        
+        D_Confirmacion.setVisible(false);
+        
+    }//GEN-LAST:event_B_Confirmar_ConfirmacionMouseClicked
+
+    private void B_NuevaCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_NuevaCuentaMouseClicked
+        // TODO add your handling code here:
+        
+        ultNumCuenta++;
+        guardarNumCuenta(ultNumCuenta);
+        idTxn++;
+        guardarIdTxn(idTxn);
+        
+        Cuenta nCuenta = new Cuenta(ultNumCuenta, 0, clienteActual.getId());
+        clienteActual.getCuentas().add(nCuenta);
+        
+        Transaccion nTrans = new Transaccion(ultNumCuenta, "Creación cuenta", LocalDateTime.now(), idTxn);
+        clienteActual.getTransacciones().add(nTrans);
+        
+        guardarUsuarios(usuarios);
+        
+        JOptionPane.showMessageDialog(D_MenuCliente, "Nueva cuenta numero: " + ultNumCuenta + " creada");
+        
+        guardarLog("Creacion cuenta: " + ultNumCuenta + " ,usuario: " + clienteActual + ", ID transaccion: " + idTxn);
+        
+        D_MenuCliente.setVisible(false);
+    }//GEN-LAST:event_B_NuevaCuentaMouseClicked
+
+    private void B_DepositoPropiasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_DepositoPropiasMouseClicked
+        // TODO add your handling code here:
+        
+        D_MenuCliente.setVisible(false);
+        
+        CB_Cuentas_DepositoPropia.removeAllItems();;
+        for (Cuenta cuenta : clienteActual.getCuentas()) {
+            CB_Cuentas_DepositoPropia.addItem(cuenta);
+        }
+        
+        D_DepositoPropias.pack();
+        D_DepositoPropias.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        D_DepositoPropias.setVisible(true);
+        
+    }//GEN-LAST:event_B_DepositoPropiasMouseClicked
+
+    private void B_Depositar_DepositarPropiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_Depositar_DepositarPropiaMouseClicked
+        // TODO add your handling code here:
+        idTxn++;
+        guardarIdTxn(idTxn);
+        
+        int monto = Integer.parseInt(TF_Monto_DepositarPropia.getText());
+        Cuenta cuenta = (Cuenta) CB_Cuentas_DepositoPropia.getSelectedItem();
+        cuenta.setSaldoDisponible(cuenta.getSaldoDisponible() + monto);
+        
+        Transaccion nTrans = new Transaccion(cuenta.getNumCuenta(), "Deposito de L. " + monto, LocalDateTime.now(), idTxn);
+        clienteActual.getTransacciones().add(nTrans);
+        
+        guardarUsuarios(usuarios);
+        
+        JOptionPane.showMessageDialog(D_DepositoPropias, "Deposito exitoso");
+        
+        
+        guardarLog("Cliente: " + clienteActual.getId() + " ha depositado L." + monto + " a la cuenta: " + cuenta.getId());
+        
+        D_DepositoPropias.setVisible(false);
+    }//GEN-LAST:event_B_Depositar_DepositarPropiaMouseClicked
+
+    private void B_EstadoCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_EstadoCuentaMouseClicked
+        // TODO add your handling code here:
+        
+        D_MenuCliente.setVisible(false);
+        
+        CB_Cuentas_EstadoCuenta.removeAllItems();
+        for (Cuenta cuenta : clienteActual.getCuentas()) {
+            CB_Cuentas_EstadoCuenta.addItem(cuenta);
+        }
+        
+        D_EstadoCuenta.pack();
+        D_EstadoCuenta.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        D_EstadoCuenta.setVisible(true);
+        
+    }//GEN-LAST:event_B_EstadoCuentaMouseClicked
+
+    private void B_RevisarEstado_EstadoCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_RevisarEstado_EstadoCuentaMouseClicked
+        // TODO add your handling code here:
+        idTxn++;
+        guardarIdTxn(idTxn);
+        
+        Cuenta cuenta = (Cuenta) CB_Cuentas_EstadoCuenta.getSelectedItem();
+        Transaccion nTrans = new Transaccion(cuenta.getNumCuenta(), "Revision estado cuenta, cliente: " + clienteActual.getId(), LocalDateTime.now(), idTxn);
+        clienteActual.getTransacciones().add(nTrans);
+        
+        guardarUsuarios(usuarios);
+        
+        JOptionPane.showMessageDialog(D_EstadoCuenta, "Numero de cuenta: " + cuenta.getNumCuenta() + ", Saldo: " + cuenta.getSaldoDisponible());
+        
+        guardarLog("Revision cuenta: " + cuenta.getNumCuenta() + ", saldo: " + cuenta.getSaldoDisponible() + ", usuario: " + clienteActual.getId() + ", transaccion: " + idTxn);
+        
+        D_EstadoCuenta.setVisible(false);
+    }//GEN-LAST:event_B_RevisarEstado_EstadoCuentaMouseClicked
+
+    private void B_TransaccionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_TransaccionesMouseClicked
+        // TODO add your handling code here:
+        
+        D_MenuCliente.setVisible(false);
+        
+        TBL_Transacciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Numero de Cuenta", "Descripcion", "Fecha y hora", "ID transaccion"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        
+        DefaultTableModel tablaTrans = (DefaultTableModel) TBL_Transacciones.getModel();
+        for (Transaccion transaccion : clienteActual.getTransacciones()) {
+            int numCuenta = transaccion.getNumCuenta();
+            String descripcion = transaccion.getDescripcion();
+            LocalDateTime fechaHora = transaccion.getFechaHora();
+            int txnId = transaccion.getTxnId();
+            Object[] newRow = {numCuenta,descripcion,fechaHora,txnId};
+            tablaTrans.addRow(newRow);
+        }
+        
+        D_Transacciones.pack();
+        D_Transacciones.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        D_Transacciones.setVisible(true);
+    }//GEN-LAST:event_B_TransaccionesMouseClicked
+
+    private void B_Salir_TransaccionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_Salir_TransaccionesMouseClicked
+        // TODO add your handling code here:
+        idTxn++;
+        guardarIdTxn(idTxn);
+       
+        Transaccion nTrans = new Transaccion(0, "Revision de transacciones, cliente: " + clienteActual.getId(), LocalDateTime.now(), idTxn);
+        clienteActual.getTransacciones().add(nTrans);
+        
+        guardarUsuarios(usuarios);
+        
+        guardarLog("Revision transacciones, usuario: " + clienteActual.getId() + ", transaccion: " + idTxn);
+        
+        D_Transacciones.setVisible(false);
+    }//GEN-LAST:event_B_Salir_TransaccionesMouseClicked
+
+    private void B_RetiroPropiasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_RetiroPropiasMouseClicked
+        // TODO add your handling code here:
+        
+        D_MenuCliente.setVisible(false);
+        
+        CB_Cuentas_RetiroPropia.removeAllItems();
+        for (Cuenta cuenta : clienteActual.getCuentas()) {
+            CB_Cuentas_RetiroPropia.addItem(cuenta);
+        }
+        
+        D_RetiroPropias.pack();
+        D_RetiroPropias.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        D_RetiroPropias.setVisible(true);
+    }//GEN-LAST:event_B_RetiroPropiasMouseClicked
+
+    private void B_Retirar_RetiroPropiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_Retirar_RetiroPropiaMouseClicked
+        // TODO add your handling code here:
+        
+        Cuenta cuenta = (Cuenta) CB_Cuentas_RetiroPropia.getSelectedItem();
+        int monto = Integer.parseInt(TF_Monto_RetiroPropia.getText());
+        
+        if (!(monto % 100 == 0)) {
+            JOptionPane.showMessageDialog(D_RetiroPropias, "El monto debe de ser multiplo de 100");
+            return;
+        }
+        
+        if (cuenta.getSaldoDisponible() < monto) {
+            JOptionPane.showMessageDialog(D_DepositoPropias, "Su saldo es insuficiente");
+            return;
+        }
+        
+        int dineroATM = atmActual.getBilletes100() * 100 + atmActual.getBilletes500() * 500;
+        if (dineroATM < monto) {
+            JOptionPane.showMessageDialog(D_DepositoPropias, "Este cajero no tiene suficiente dinero");
+            guardarLog("Retiro cancelado por dinero insuficiente en cajero, cliente: " + clienteActual.getId() + ", monto: " + monto);
+            D_RetiroPropias.setVisible(false);
+        }
+        
+        int n500 = Math.min(atmActual.getBilletes500(), monto/500);
+        
+        int n100 = Math.max(atmActual.getBilletes100(), (monto - n500 * 500)/100);
+        
+        if ((n500 * 500 + n100 * 100) != monto) {
+            JOptionPane.showMessageDialog(D_RetiroPropias, "Retiro cancelado, No hay suficientes billetes de 100 para el monto solicitado");
+            guardarLog("Retiro cancelado por dinero insuficiente en cajero, cliente: " + clienteActual.getId() + ", monto: " + monto);
+            D_DepositoPropias.setVisible(false);
+        }
+        
+        idTxn++;
+        guardarIdTxn(idTxn);
+        
+        Transaccion nTrans = new Transaccion(cuenta.getNumCuenta(),"Retiro de L." + monto, LocalDateTime.now(),idTxn);
+        clienteActual.getTransacciones().add(nTrans);
+        cuenta.setSaldoDisponible(cuenta.getSaldoDisponible() - monto);
+        guardarUsuarios(usuarios);
+        
+        atmActual.setBilletes500(atmActual.getBilletes500() - n500);
+        atmActual.setBilletes100(atmActual.getBilletes100() - n100);
+        guardarATMs(atms);
+        
+        guardarLog("Retiro de L." + monto + ", cuenta: " + cuenta.getNumCuenta() + ", cliente: " + clienteActual.getId() + ", Transaccion: " + idTxn);
+        
+        D_RetiroPropias.setVisible(false);
+
+    }//GEN-LAST:event_B_Retirar_RetiroPropiaMouseClicked
+
+    private void B_DepositoTercerosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B_DepositoTercerosMouseClicked
+        // TODO add your handling code here:
+        D_MenuCliente.setVisible(false);
+        
+        D_DepositoTerceros.pack();
+        D_DepositoTerceros.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        D_DepositoTerceros.setVisible(true);
+        
+    }//GEN-LAST:event_B_DepositoTercerosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -698,34 +1521,64 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton B_Asignar_AsignarATMs;
+    private javax.swing.JButton B_Confirmar_Confirmacion;
     private javax.swing.JButton B_CrearATM_CrearATMs;
     private javax.swing.JButton B_CrearUsuario;
+    private javax.swing.JButton B_Depositar_DepositarPropia;
+    private javax.swing.JButton B_DepositoPropias;
+    private javax.swing.JButton B_DepositoTerceros;
     private javax.swing.JButton B_EscojerATM;
+    private javax.swing.JButton B_EstadoCuenta;
+    private javax.swing.JButton B_Finalizar_Mantenimiento;
     private javax.swing.JButton B_IniciarSesion_LogIn;
+    private javax.swing.JButton B_NuevaCuenta;
+    private javax.swing.JButton B_Retirar_RetiroPropia;
+    private javax.swing.JButton B_RetiroPropias;
+    private javax.swing.JButton B_RevisarEstado_EstadoCuenta;
+    private javax.swing.JButton B_Salir_Transacciones;
+    private javax.swing.JButton B_Transacciones;
     private javax.swing.JComboBox<ATM> CB_ATMs_AsignarATMs;
     private javax.swing.JComboBox<ATM> CB_ATMs_InicioSesion;
+    private javax.swing.JComboBox<Cuenta> CB_Cuentas_DepositoPropia;
+    private javax.swing.JComboBox<Cuenta> CB_Cuentas_EstadoCuenta;
+    private javax.swing.JComboBox<Cuenta> CB_Cuentas_RetiroPropia;
     private javax.swing.JComboBox<String> CB_TipoUsuario_CrearUsuario;
     private javax.swing.JComboBox<UsuarioMantenimiento> CB_UsuarioMantenimiento_AsignarATMs;
+    private javax.swing.JDialog D_Confirmacion;
+    private javax.swing.JDialog D_DepositoPropias;
+    private javax.swing.JDialog D_DepositoTerceros;
+    private javax.swing.JDialog D_EstadoCuenta;
     private javax.swing.JDialog D_LogIn;
     private javax.swing.JDialog D_MenuCliente;
     private javax.swing.JDialog D_MenuMantenimiento;
+    private javax.swing.JDialog D_NuevaCuenta;
+    private javax.swing.JDialog D_RetiroPropias;
+    private javax.swing.JDialog D_Transacciones;
     private javax.swing.JLabel LBL_Bienvenida_LogIn;
+    private javax.swing.JLabel LBL_Pass_Confirmacion;
+    private javax.swing.JPasswordField PF_Clave_Confirmacion;
     private javax.swing.JPasswordField PF_Clave_CrearUsuario;
     private javax.swing.JPasswordField PF_Clave_LogIn;
     private javax.swing.JPanel P_ATM;
     private javax.swing.JPanel P_AsignarATMs;
     private javax.swing.JPanel P_InicioSesion;
+    private javax.swing.JPanel P_MenuCliente;
     private javax.swing.JPanel P_Usuario;
+    private javax.swing.JTable TBL_Transacciones;
     private javax.swing.JTextField TF_Afiliacion_CrearUsuario;
     private javax.swing.JTextField TF_Apellido1_CrearUsuario;
     private javax.swing.JTextField TF_Apellido2_CrearUsuario;
     private javax.swing.JTextField TF_Billetes100_CrearATM;
+    private javax.swing.JTextField TF_Billetes100_Mantenimiento;
     private javax.swing.JTextField TF_Billetes500_CrearATM;
+    private javax.swing.JTextField TF_Billetes500_Mantenimiento;
     private javax.swing.JTextField TF_Fabricacion_CrearATM;
     private javax.swing.JTextField TF_ID_CrearATM;
     private javax.swing.JTextField TF_ID_CrearUsuario;
     private javax.swing.JTextField TF_ID_LogIn;
     private javax.swing.JTextField TF_Mantenimiento_CrearATM;
+    private javax.swing.JTextField TF_Monto_DepositarPropia;
+    private javax.swing.JTextField TF_Monto_RetiroPropia;
     private javax.swing.JTextField TF_Nacimiento_CrearUsuario;
     private javax.swing.JTextField TF_Nombre1_CrearUsuario;
     private javax.swing.JTextField TF_Nombre2_CrearUsuario;
@@ -744,14 +1597,34 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+    
+    //Numero de cuenta
+    private static int ultNumCuenta;
     
     //Usuarios
     private static ArrayList<Usuario> usuarios = new ArrayList<>();
@@ -851,7 +1724,44 @@ public class Principal extends javax.swing.JFrame {
             String l = "" + idTxn;
             fw.write (l);
         } catch (IOException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
+    }
+    
+    public static int leerIdTxn() {
+        int idTxn = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader("IDTXN.txt"))) {
+            String linea;
+            linea = br.readLine();
+            idTxn = Integer.parseInt(linea);
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return idTxn;
+    }
+    
+    public static void guardarNumCuenta(int numCuenta) {
+        try (FileWriter fw = new FileWriter("numCuenta.txt")) {
+            String l = "" + numCuenta;
+            fw.write (l);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public static int leerNumCuenta() {
+        int numCuenta = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader("numCuenta.txt"))) {
+            String linea;
+            linea = br.readLine();
+            numCuenta = Integer.parseInt(linea);
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return numCuenta;
     }
 }
